@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./index.js" defer></script>
+    <script src="./scripts/setup.js" defer></script>
+    <script src="./scripts/calcBezier.js" defer></script>
+    <script src="./scripts/mouseEvents.js" defer></script>
+</head>
+<body>
+    <canvas id="canvas1"></canvas>
+    <div id="options">
+        <button id="drawButton" onclick="startBezier()">draw</button>
+        <div id="formDiv">
+            <form id="form1">
+                <input type="checkbox" checked id="resetCanvas" name="resetCanvas">
+                <label>Reset canvas</label><br><br>
+                <div class="seperator"></div><br>
+                <input type="checkbox" id="drawLines" name="drawLines">
+                <label>Draw helping lines</label><br><br>
+                <label>Opacity</label><br>
+                <input type="range" min="0" max="100" value="50" id="drawLinesSlider"><br><br>
+                <div class="seperator"></div><br>
+                <input type="checkbox" id="showTangents" name="showTangents">
+                <label>Highlight tangents</label><br><br>
+                <div class="seperator"></div><br>
+                <label>Smoothness</label><br>
+                <input type="range" min="1" max="200" value="50" id="intervalSlider"><br><br>
+                <div class="seperator"></div><br>
+                <input type="checkbox" id="drawPartly" name="drawPartly">
+                <label>show specific progress</label><br><br>
+                <div class="seperator"></div><br>
+                <label>Reset</label><br>
+                <div style="height: 5px;"></div>
+                <button type="reset" id="resetOptions" style="position: absolute; width: 30%; right:10%">options</button>
+            </form>
+            <button id="resetPoints" onclick="resetPoints()" style="position: absolute; width: 30%; left:10%">points</button>
+        </div>
+    </div>
+    <div id="progressOptions" style="display: none;">
+        <label>Progress</label><br>
+        <input type="range" min="0" max="100" value="0" id="progressSlider"><br><br>
+        <div class="seperator"></div><br>
+        <button id="resetPoints" onclick="animate()" style="position: absolute; width: 30%; left:35%">animate</button>
+    </div>
+    
+</body>
+</html>
