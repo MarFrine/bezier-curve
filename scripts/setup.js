@@ -12,6 +12,9 @@ window.addEventListener("resize", ()=>{
 const ctx = canvas.getContext("2d")
 const form = document.getElementById("form1")
 form.reset()
+form.addEventListener("change", ()=>{
+    updateOptions()
+})
 
 const drawLinesSlider = document.getElementById("drawLinesSlider")
 const intervalSlider = document.getElementById("intervalSlider")
@@ -24,7 +27,7 @@ let options = {
     lineOpacity: 0.5,
     showTangents: false,
     drawControl: false,
-    resetCanvas: true,
+    drawCurve: true,
     drawPartly: false,
     progress: 0,
 
@@ -33,7 +36,7 @@ let options = {
         this.drawLines = false
         this.lineOpacity = 0.5
         this.showTangents = false
-        this.resetCanvas = true
+        this.drawCurve = true
         this.drawPartly = false
         this.progress = 0
         this.drawControl = false
@@ -129,13 +132,18 @@ function updateOptions(){
     const formData = new FormData(form);
     if(formData.get("drawLines")) options.drawLines = true
     if(formData.get("showTangents")) options.showTangents = true
-    if(formData.get("resetCanvas")) {
-        options.resetCanvas = true
-        ctx.clearRect(0,0,canvas.width,canvas.height)
-    }
+    if(!formData.get("drawCurve")) options.drawCurve = false
     if(formData.get("showControl")) options.drawControl = true
     if(formData.get("drawPartly")) options.drawPartly = true
     options.progress = progressSlider.value/1000
     options.interval = 1/intervalSlider.value
     options.lineOpacity = drawLinesSlider.value/100
+    ctx.clearRect(0,0,canvas.width,canvas.height)
+    if(initialDraw){
+        calcBezier()
+        drawCompleteBezier()
+    } else {
+        points.forEach((thisPoint)=>{thisPoint.draw()})
+    }
+    
 }

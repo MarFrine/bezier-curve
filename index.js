@@ -7,12 +7,11 @@ function resetPoints(){
 function startBezier(){
     initialDraw = true
     updateOptions()
-    calcBezier()
-    drawCompleteBezier()
 }
 
 function drawCompleteBezier(){
-    if(bezierPoints.length < 2) return
+    console.log("drawCompleteBezier")
+    if(points.length < 2) return
 
     if(options.drawPartly){
         ctx.clearRect(0,0,canvas.width,canvas.height)
@@ -34,15 +33,16 @@ function drawCompleteBezier(){
             })
         }
     }
-
-    ctx.strokeStyle = "red"
-    ctx.lineWidth = 4
-    ctx.beginPath()
-    ctx.moveTo(bezierPoints[0].x, bezierPoints[0].y)
-    for(let i = 1; i < bezierPoints.length; i++){
-        ctx.lineTo(bezierPoints[i].x, bezierPoints[i].y)
+    if(options.drawCurve){
+        ctx.strokeStyle = "red"
+        ctx.lineWidth = 4
+        ctx.beginPath()
+        ctx.moveTo(bezierPoints[0].x, bezierPoints[0].y)
+        for(let i = 1; i < bezierPoints.length; i++){
+            ctx.lineTo(bezierPoints[i].x, bezierPoints[i].y)
+        }
+        ctx.stroke()
     }
-    ctx.stroke()
 
     if(options.drawControl) points.forEach((thisPoint)=>{thisPoint.draw()})
     points[0].draw()
