@@ -1,13 +1,21 @@
 function mouseDown(event){
+    let deleted = false
     points.forEach((thisPoint)=>{
         if(Math.abs(thisPoint.x - event.x) < 10  && Math.abs(thisPoint.y - event.y) < 10 && !mouse.dragging){
-            mouse.dragging = true
-            mouse.drag = thisPoint.index
-            thisPoint.animation = setInterval(movePointToMouse, 30)
+            if(thisPoint.deletable) {
+                thisPoint.delete()
+                deleted = true
+            } else {
+                mouse.dragging = true
+                mouse.drag = thisPoint.index
+                thisPoint.animation = setInterval(movePointToMouse, 30)
+                thisPoint.deletable = true
+                thisPoint.countDown()
+            }
         }
     })
 
-    if(!mouse.dragging){
+    if(!mouse.dragging && !deleted){
         let length = points.push(new Point(event.x, event.y, "rgb(152, 26, 190)"))
         if(length > 2){
             points[length-2].color = "white"

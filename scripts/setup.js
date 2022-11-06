@@ -1,8 +1,18 @@
 const canvas = document.getElementById("canvas1")
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
+window.addEventListener("resize", ()=>{
+    console.log("test123")
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    points.forEach((thisPoint)=>{thisPoint.draw()})
+    if(initialDraw == true){startBezier()}
+})
+
 const ctx = canvas.getContext("2d")
 const form = document.getElementById("form1")
+form.reset()
+
 const drawLinesSlider = document.getElementById("drawLinesSlider")
 const intervalSlider = document.getElementById("intervalSlider")
 const optionsDiv = document.getElementById("options")
@@ -13,6 +23,7 @@ let options = {
     drawLines: false,
     lineOpacity: 0.5,
     showTangents: false,
+    drawControl: false,
     resetCanvas: true,
     drawPartly: false,
     progress: 0,
@@ -25,6 +36,7 @@ let options = {
         this.resetCanvas = true
         this.drawPartly = false
         this.progress = 0
+        this.drawControl = false
     }
 }
 
@@ -33,6 +45,8 @@ let newPoints = {}
 let bezierPoints = []
 let currentHelpingLines = []
 let initialDraw = false
+let animate = false
+let animation = undefined
 
 mouse = {
     x: 0,
@@ -52,6 +66,7 @@ class Point{
         this.y = y
         this.index = undefined
         this.color = color || "white"
+        this.deletable = false
         this.draw()
     }
     draw(){
@@ -59,6 +74,29 @@ class Point{
         ctx.beginPath()
         ctx.arc(this.x, this.y, 8, 0, 2 * Math.PI)
         ctx.fill()
+    }
+    countDown(){
+        setTimeout(()=>{this.deletable = false}, 200)
+    }
+    delete(){
+        points.splice(this.index, 1)
+        points.forEach((thisPoint)=>{
+        if(thisPoint.index > this.index){
+            thisPoint.index -= 1
+            if(thisPoint.index == 0){
+                thisPoint.color = "rgb(152, 26, 190)"
+            }
+        }
+        if(thisPoint.index == points.length-1){
+            thisPoint.color = "rgb(152, 26, 190)"
+        }
+        })
+        
+        
+        ctx.clearRect(0,0,canvas.width,canvas.height)
+        points.forEach((thisPoint)=>{thisPoint.draw()})
+
+        if(initialDraw == true){startBezier()}
     }
 }
 
@@ -79,7 +117,25 @@ optionsDiv.addEventListener("click", (event)=>{
 })
 
 progressSlider.oninput = (event)=>{
-    options.progress = progressSlider.value/100
+    options.progress = progressSlider.value/1000
     console.log(options.progress)
     if(initialDraw == true){startBezier()}
+    clearTimeout(animation)
+    animate = false
+}
+
+function updateOptions(){
+    options.reset()
+    const formData = new FormData(form);
+    if(formData.get("drawLines")) options.drawLines = true
+    if(formData.get("showTangents")) options.showTangents = true
+    if(formData.get("resetCanvas")) {
+        options.resetCanvas = true
+        ctx.clearRect(0,0,canvas.width,canvas.height)
+    }
+    if(formData.get("showControl")) options.drawControl = true
+    if(formData.get("drawPartly")) options.drawPartly = true
+    options.progress = progressSlider.value/1000
+    options.interval = 1/intervalSlider.value
+    options.lineOpacity = drawLinesSlider.value/100
 }

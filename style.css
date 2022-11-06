@@ -25,7 +25,7 @@
         background-color: rgba(10,10,10,0.6);
     }
     100% {
-        height: 550px;
+        height: 610px;
         width: 200px;
         border: 3px solid rgb(114, 20, 139);
         background-color: rgba(10,10,10,1);
@@ -51,7 +51,7 @@
 #options:hover{
     background-color: rgba(10,10,10,1);
     border: 3px solid rgb(114, 20, 139);
-    height: 550px;
+    height: 610px;
     width: 200px;
     animation: openOptions 0.6s ease-in-out;
 }

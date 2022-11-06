@@ -8,7 +8,7 @@ function calcBezier() {
     if(options.drawPartly){
         maxValue = options.progress + 0.00001
     }
-    console.log(maxValue)
+    //console.log(maxValue)
     currentHelpingLines = []
     for (let i = 0; i <= maxValue; i += options.interval) { // zeichnet die kurve schritt für schritt (erst bei 10%, dann 20%, von options.interval abhängig)
         let lastProgress = false
@@ -47,6 +47,7 @@ function calcLine(point1, point2, point3, progress, lastStep, lastProgress){
 
     if(options.drawLines && !options.drawPartly){
         ctx.fillStyle = "rgba(255,255,255,0.2)"
+        ctx.lineWidth = 1
         ctx.strokeStyle = "rgba(255,255,255," + options.lineOpacity + ")"
         ctx.beginPath()
         ctx.arc(thisX1, thisY1, 2, 0, 2 * Math.PI)

@@ -26,8 +26,11 @@
                 <input type="checkbox" id="showTangents" name="showTangents">
                 <label>Highlight tangents</label><br><br>
                 <div class="seperator"></div><br>
+                <input type="checkbox" checked id="showControl" name="showControl">
+                <label>Show control points</label><br><br>
+                <div class="seperator"></div><br>
                 <label>Smoothness</label><br>
-                <input type="range" min="1" max="200" value="50" id="intervalSlider"><br><br>
+                <input type="range" min="1" max="300" value="50" id="intervalSlider"><br><br>
                 <div class="seperator"></div><br>
                 <input type="checkbox" id="drawPartly" name="drawPartly">
                 <label>show specific progress</label><br><br>
@@ -41,9 +44,9 @@
     </div>
     <div id="progressOptions" style="display: none;">
         <label>Progress</label><br>
-        <input type="range" min="0" max="100" value="0" id="progressSlider"><br><br>
+        <input type="range" min="0" max="1000" value="0" id="progressSlider"><br><br>
         <div class="seperator"></div><br>
-        <button id="resetPoints" onclick="animate()" style="position: absolute; width: 30%; left:35%">animate</button>
+        <button id="resetPoints" onclick="animateBezier()" style="position: absolute; width: 30%; left:35%">animate</button>
     </div>
     
 </body>
