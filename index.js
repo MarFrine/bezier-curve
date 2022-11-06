@@ -16,6 +16,7 @@ function drawCompleteBezier(){
     if(options.drawPartly){
         ctx.clearRect(0,0,canvas.width,canvas.height)
         ctx.strokeStyle = "rgba(255,255,255," + options.lineOpacity + ")"
+        ctx.lineWidth = 3
 
         if(options.drawLines){
             ctx.beginPath()
